@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+    
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!------------------------------------------------------------->
+    <div class="container">
+        <h1>Manejo de carrito de compras</h1>
+        <div class="alert d-none" role="alert" id="message">
+        
+        </div>
+        <form>
+            <div class="mb-3">
+                <label for="reference" class="form-label">Referencia</label>
+                <input type="text" class="form-control" id="reference" aria-describedby="emailHelp" placeholder="Ingrese referencia">
+                <span id="mreference" style="color:red;font-weight: bold;"></span>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripcion</label>
+                <input type="text" class="form-control" id="description" placeholder="Ingrese Descripcion">
+                <span id="mdescription" style="color:red;font-weight: bold;"></span>
+              </div>
+            <div class="mb-3">
+                <label for="unitprice" class="form-label">Precio unitario</label>
+                <input type="text" class="form-control" id="unitprice" placeholder="Ingrese precio">
+                <span id="munitprice" style="color:red;font-weight: bold;"></span>
+            </div>
+            <div class="mb-3">
+                <label for="stock" class="form-label">Existencia</label>
+                <input type="text" class="form-control" id="stock" placeholder="Ingrese existencia">
+                <span id="mstock" style="color:red;font-weight: bold;"></span>
+            </div>
+        
+            <button type="button" class="btn btn-primary" id="btnadd"   >Agregar</button>
+            <button type="button" class="btn btn-primary" id="btnsearch">Buscar</button>
+            <button type="button" class="btn btn-primary" id="btnupdate">Actualizar</button>
+            <button type="button" class="btn btn-primary" id="btndelete">Eliminar</button>
+            <button type="button" class="btn btn-primary" id="btnlist"  >Listar</button>
+        </form>
+    </div>
+
+    <script>
+      //definir las variables que van a apuntar a los elementos en html
+      let message     = document.getElementById('message');
+      let reference   = document.getElementById('reference');
+      let description = document.getElementById('description');
+      let unitprice   = document.getElementById('unitprice');
+      let stock       =document.getElementById('stock');
+      //Mensajes span
+      let mreference   = document.getElementById('mreference');
+      let mdescription = document.getElementById('mdescription');
+      let munitprice   = document.getElementById('munitprice');
+      let mstock       = document.getElementById('mstock');
+      //botones
+      let btnadd    = document.getElementById('btnadd');     
+      let btnsearch = document.getElementById('btnsearch');
+      let btnupdate = document.getElementById('btnupdate');
+      let btndelete = document.getElementById('btndelete');
+      let btnlist   = document.getElementById('btnlist');
+      //Definir el arreglo de objetos para los productos
+      let productos = [
+        {reference:'A1',description:'Mouse',unitprice:'25000',stock:'10'},
+        {reference:'A2',description:'teclado',unitprice:'35000',stock:'20'}
+      ];
+
+      message.style.display = 'none';
+
+      //Programar programacion de eventos
+      reference.addEventListener('focus',()=>{
+          //mreference.innerHTML = "<i> Ingrese la referencia del producto</i>" No es buena practica
+          mreference.textContent = "Ingrese la referencia del producto"
+      })
+
+      reference.addEventListener('blur',()=>{
+        mreference.textContent = "";
+      })
+
+      description.addEventListener('focus',()=>{
+          //mreference.innerHTML = "<i> Ingrese la referencia del producto</i>" No es buena practica
+          mdescription.textContent = "Ingrese la descripcion del producto"
+      })
+
+      description.addEventListener('blur',()=>{
+        mdescription.textContent = "";
+      })
+
+      unitprice.addEventListener('focus',()=>{
+          //mreference.innerHTML = "<i> Ingrese la referencia del producto</i>" No es buena practica
+          munitprice.textContent = "Ingrese el precio"
+      })
+
+      unitprice.addEventListener('blur',()=>{
+          munitprice.textContent = "";
+      })
+      
+      stock.addEventListener('focus',()=>{
+          //mreference.innerHTML = "<i> Ingrese la referencia del producto</i>" No es buena practica
+          mstock.textContent = "Ingrese el stock"
+      })
+
+      stock.addEventListener('blur',()=>{
+        mstock.textContent = "";
+      })
+
+      //Programacion de enventos clik "Agrega"
+    
+      btnadd.addEventListener('click',()=>{
+        if (reference.value !="" && description.value !="" && unitprice.value !=""){
+          //guardar el arreglo de los productos
+          //Generar el objeto con cada uno de los datos del producto contenidos en cada input
+          let nvoproducto = {reference:reference.value, description:description.value,unitprice:parseInt(unitprice.value),stock:parseInt(stock.value) }
+          productos.push(nvoproducto);
+          console.log(nvoproducto);
+            
+          
+          
+
+          //Buscar la referencia de los productos
+          let buscarProductos = productos.find(prod => prod.reference == reference.value);
+            if (buscarProductos != undefined){//Encuentra el objeto con esa referencia
+                          let nvoproducto = {reference:reference.value, description:description.value,unitprice:parseInt(unitprice.value),stock:parseInt(stock.value) }
+            productos.push(nvoproducto);
+            // Emitir mensaje: Producto no encontrado 
+            message.classList.add("alert-success");
+            message.textContent ="Producto guardado"
+            // retardo de 3 segundos (simular una comunicacion asincrona con un server)
+            setTimeout(()=>{
+              message.classList.remove('alert-success');
+              message.classList.add("d-none");
+            },3000)
+          
+            }
+          else {
+            message.classList.add("alert.danger");
+            message.textContent ="La referencia ya existe. Intentalo con otra.."
+          }
+        }
+        
+        else  {
+          if(reference.value == ""){
+            mreference.textContent ="La referrencia es obligatoria "
+          }else if(description.value ==""){
+            mdescription.textContent= "La descripcion es obligatoria" 
+          }else if (unitprice.value==""){
+            munitprice.textContent= "El precio es obligatorio"
+          }
+          message.classList.remove('d-none')    
+          message.classList.add("alert-danger")
+          message.textContent= "Debe ingresar todos los datos";
+        }})
+        btnsearch.addEventListener('click',()=>{
+          
+        })
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
